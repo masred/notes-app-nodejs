@@ -24,7 +24,7 @@ const addNoteHandler = (request, h) => {
   if (isSuccess) {
     const response = h.response({
       status: 'success',
-      message: 'notes successfully added',
+      message: 'Notes successfully added',
       data: {
         noteId: id,
       },
