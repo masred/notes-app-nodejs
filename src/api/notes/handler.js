@@ -29,7 +29,7 @@ module.exports = class NoteHandler {
   }
 
   getNotesHandler() {
-    const notes = this.service.getNotesHandler();
+    const notes = this.service.getNotes();
     return {
       status: 'success',
       data: {
@@ -41,7 +41,7 @@ module.exports = class NoteHandler {
   getNoteByIdHandler(request, h) {
     try {
       const { id } = request.params;
-      const note = this.service.getNoteByIdHandler(id);
+      const note = this.service.getNoteById(id);
       return {
         status: 'success',
         data: {
@@ -61,7 +61,7 @@ module.exports = class NoteHandler {
   putNoteByIdHandler(request, h) {
     try {
       const { id } = request.params;
-      this.service.editNoteByIdHandler(id, request.payload);
+      this.service.editNoteById(id, request.payload);
       const response = h.response({
         status: 'success',
         message: 'Note successfully updated',
@@ -81,7 +81,7 @@ module.exports = class NoteHandler {
   deleteNoteByIdHandler(request, h) {
     try {
       const { id } = request.params;
-      this.service.deleteNoteByIdHandler(id);
+      this.service.deleteNoteById(id);
       const response = h.response({
         status: 'success',
         message: 'Note successfully deleted',
