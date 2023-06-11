@@ -6,6 +6,6 @@ module.exports = {
   version: '1.0.0',
   register: async (server, { service }) => {
     const notesHandler = new NotesHandler(service);
-    server.routes(routes(notesHandler));
+    server.route(routes(notesHandler));
   },
 };
