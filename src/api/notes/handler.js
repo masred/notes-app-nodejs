@@ -12,12 +12,12 @@ module.exports = class NoteHandler {
     this.deleteNoteByIdHandler = this.deleteNoteByIdHandler.bind(this);
   }
 
-  postNoteHandler(request, h) {
+  async postNoteHandler(request, h) {
     try {
       this.validator.validateNotePayload(request.payload);
       const { title = 'untitled', body, tags } = request.payload;
 
-      const noteId = this.service.addNote({ title, body, tags });
+      const noteId = await this.service.addNote({ title, body, tags });
 
       const response = h.response({
         status: 'success',
@@ -49,8 +49,8 @@ module.exports = class NoteHandler {
     }
   }
 
-  getNotesHandler() {
-    const notes = this.service.getNotes();
+  async getNotesHandler() {
+    const notes = await this.service.getNotes();
     return {
       status: 'success',
       data: {
@@ -59,10 +59,10 @@ module.exports = class NoteHandler {
     };
   }
 
-  getNoteByIdHandler(request, h) {
+  async getNoteByIdHandler(request, h) {
     try {
       const { id } = request.params;
-      const note = this.service.getNoteById(id);
+      const note = await this.service.getNoteById(id);
       return {
         status: 'success',
         data: {
@@ -90,11 +90,11 @@ module.exports = class NoteHandler {
     }
   }
 
-  putNoteByIdHandler(request, h) {
+  async putNoteByIdHandler(request, h) {
     try {
       this.validator.validateNotePayload(request.payload);
       const { id } = request.params;
-      this.service.editNoteById(id, request.payload);
+      await this.service.editNoteById(id, request.payload);
       const response = h.response({
         status: 'success',
         message: 'Note successfully updated',
@@ -122,10 +122,10 @@ module.exports = class NoteHandler {
     }
   }
 
-  deleteNoteByIdHandler(request, h) {
+  async deleteNoteByIdHandler(request, h) {
     try {
       const { id } = request.params;
-      this.service.deleteNoteById(id);
+      await this.service.deleteNoteById(id);
       const response = h.response({
         status: 'success',
         message: 'Note successfully deleted',
